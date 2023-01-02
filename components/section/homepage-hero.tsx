@@ -11,7 +11,7 @@ export const HomepageHero = () => (
       variant="secondary"
       size="small"
     >
-      Sello *Hub* 2023 Release – Built for scale <Highlight>→</Highlight>
+      Sello 2023 Release – Built for scale <Highlight>→</Highlight>
     </Button>
     <HeroTitle className="translate-y-[-1rem] animate-fade-in opacity-0 [--animation-delay:200ms]">
       Experience the Power of Cutting-Edge
