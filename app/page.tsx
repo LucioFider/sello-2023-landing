@@ -5,6 +5,7 @@ import { Container } from "../components/container";
 
 import { StarsIllustration } from "../components/icons/stars";
 import { HomepageHero } from "../components/section/homepage-hero";
+import { UnlikeAnyTool } from "../components/section/unlike-any-tool";
 
 export default function Home() {
   return (
@@ -26,6 +27,9 @@ export default function Home() {
       >
         <StarsIllustration />
       </div>
+      <Container>
+        <UnlikeAnyTool />
+      </Container>
     </>
   );
 }
