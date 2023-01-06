@@ -38,4 +38,8 @@
   .mask-linear-faded {
     mask-image: linear-gradient(black, transparent 70%);
   }
+
+  .mask-keyboard{
+    mask-image:linear-gradient(transparent 0%, rgba(0,0,0,0.57))
+  }
 }
