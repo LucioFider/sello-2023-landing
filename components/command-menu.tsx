@@ -1,7 +1,7 @@
 "use client";
 
 import classNames from "classnames";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AssignToIcon,
   BacklogIcon,
@@ -64,6 +64,7 @@ const commandOptions = [
 
 export const CommandMenu = () => {
   const [opened, setOpened] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const commandMenuRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const toggleCommandMenu = (e: MouseEvent) => {
@@ -79,6 +80,14 @@ export const CommandMenu = () => {
     };
   }, []);
 
+  const currentOptions = useMemo(() => {
+    const options =
+      selectedOption === null
+        ? commandOptions
+        : commandOptions[selectedOption].subOptions;
+
+    return options;
+  }, [selectedOption]);
   return (
     <div
       ref={commandMenuRef}
@@ -97,8 +106,11 @@ export const CommandMenu = () => {
         placeholder="Type a command or search"
       />
       <div className="flex flex-col text-sm text-off-white w-full">
-        {commandOptions.map(({ label, icon: Icon }) => (
+        {currentOptions.map(({ label, icon: Icon, ...menuItems }, index) => (
           <button
+            onClick={() => {
+              setSelectedOption("subOptions" in menuItems ? index : null);
+            }}
             className="px-5 flex h-[4.6rem] items-center hover:bg-white/[0.05] w-full"
             key={label}
           >
