@@ -66,11 +66,13 @@ export const UnlikeAnyTool = () => (
           </Button>
         </div>
         <div className="relative flex min-h-[48rem] w-full shrink-0 snap-center flex-col items-center justify-start rounded-[4.8rem] border border-transparent-white bg-glass-gradient p-8 text-center md:max-w-[calc(66.66%-12px)] md:basis-[calc(66.66%-12px)] md:p-14">
-          <p className="mb-4 text-3xl">Meet your command line</p>
-          <p className="text-md text-primary-text">
-            Complete any action in seconds with the global command menu.
-          </p>
           <CommandMenu />
+          <div className="[.opened+&]:hidden">
+            <p className="mb-4 text-3xl">Meet your command line</p>
+            <p className="text-md text-primary-text">
+              Complete any action in seconds with the global command menu.
+            </p>
+          </div>
         </div>
       </div>
     </div>

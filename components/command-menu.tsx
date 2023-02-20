@@ -1,67 +1,111 @@
+"use client";
+
+import classNames from "classnames";
+import { useEffect, useRef, useState } from "react";
+import {
+  AssignToIcon,
+  BacklogIcon,
+  NoPriorityIcon,
+  ChangePriorityIcon,
+  ChangeStatusIcon,
+  DoneIcon,
+  InProgressIcon,
+  LabelIcon,
+  PersonIcon,
+  TodoIcon,
+  UrgentIcon,
+  HighIcon,
+  MediumIcon,
+  LowIcon,
+  AddLabels,
+} from "./icons/command-bar";
+
 const commandOptions = [
   {
-    label: "Assign to...",
-    icon: () => {},
+    label: "Assign to..",
+    icon: AssignToIcon,
     subOptions: [
-      {
-        label: "Jori",
-        icon: () => {},
-      },
-      {
-        label: "Karri",
-        icon: () => {},
-      },
-      {
-        label: "Thomas",
-        icon: () => {},
-      },
+      { label: "Jori", icon: PersonIcon },
+      { label: "Karri", icon: PersonIcon },
+      { label: "Tuomas", icon: PersonIcon },
     ],
   },
   {
     label: "Change status...",
-    icon: () => {},
+    icon: ChangeStatusIcon,
     subOptions: [
-      { label: "Backlog", icon: () => {} },
-      { label: "Todo", icon: () => {} },
-      { label: "In Progress", icon: () => {} },
-      { label: "Done", icon: () => {} },
+      { label: "Backlog", icon: BacklogIcon },
+      { label: "Todo", icon: TodoIcon },
+      { label: "In Progress", icon: InProgressIcon },
+      { label: "Done", icon: DoneIcon },
     ],
   },
   {
     label: "Change priority...",
-    icon: () => {},
+    icon: ChangePriorityIcon,
     subOptions: [
-      { label: "No priority", icon: () => {} },
-      { label: "Urgent", icon: () => {} },
-      { label: "High", icon: () => {} },
-      { label: "Medium", icon: () => {} },
-      { label: "Low", icon: () => {} },
+      { label: "No priority", icon: NoPriorityIcon },
+      { label: "Urgent", icon: UrgentIcon },
+      { label: "High", icon: HighIcon },
+      { label: "Medium", icon: MediumIcon },
+      { label: "Low", icon: LowIcon },
     ],
   },
   {
     label: "Add labels...",
-    icon: () => {},
+    icon: AddLabels,
     subOptions: [
-      { label: "Bug", icon: () => {} },
-      { label: "Feature", icon: () => {} },
-      { label: "Improvement", icon: () => {} },
+      { label: "Bug", icon: () => <LabelIcon type="bug" /> },
+      { label: "Feature", icon: () => <LabelIcon type="feature" /> },
+      { label: "Improvement", icon: () => <LabelIcon type="improvement" /> },
     ],
   },
-];
+] as const;
 
 export const CommandMenu = () => {
+  const [opened, setOpened] = useState(false);
+  const commandMenuRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const toggleCommandMenu = (e: MouseEvent) => {
+      const clickedOutside = !commandMenuRef.current?.contains(
+        e.target as Node
+      );
+      setOpened(clickedOutside ? false : true);
+    };
+    window.addEventListener("click", toggleCommandMenu);
+
+    return () => {
+      window.removeEventListener("click", toggleCommandMenu);
+    };
+  }, []);
+
   return (
-    <div className="flex flex-col items-start rounded-lg bg-transparent-white border-transparent-white w-[90vw] max-w-[64rem] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">
-      <span className="ml-4 mt-2 bg-white/[0.05] text-xs px-2 leading-10 text-white/50">
-        SELLO-101-Walkaway-lightning
+    <div
+      ref={commandMenuRef}
+      className={classNames(
+        "flex flex-col items-start rounded-lg bg-transparent-white border-transparent-white w-[90vw] max-w-[64rem] absolute left-1/2 -translate-x-1/2 transition-[transform,opacity]",
+        opened && "-translate-y-[2.4rem] opacity-100 opened",
+        !opened && "translate-y-[12.8rem] opacity-60"
+      )}
+    >
+      <span className="ml-4 mt-2 bg-white/[0.05] text-xs px-2 py-1 leading-10 text-white/50">
+        SELLO-101 Walkaway-lightning
       </span>
       <input
         type="text"
         className="text-lg bg-transparent w-full p-5 outline-none"
         placeholder="Type a command or search"
       />
-      <div className="flex flex-col text-sm text-off-white">
-        <button className="p-5 ">Assign to...</button>
+      <div className="flex flex-col text-sm text-off-white w-full">
+        {commandOptions.map(({ label, icon: Icon }) => (
+          <button
+            className="px-5 flex h-[4.6rem] items-center hover:bg-white/[0.05] w-full"
+            key={label}
+          >
+            <Icon />
+            <span className="ml-3">{label}</span>
+          </button>
+        ))}
       </div>
     </div>
   );
