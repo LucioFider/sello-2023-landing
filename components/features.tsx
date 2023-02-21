@@ -13,15 +13,36 @@ export const Features = ({ title, children }: FeaturesProps) => {
 };
 // Compound Components
 
-const MainFeature = () => {
+type MainFeatureProps = {
+  image: string;
+  text: string;
+};
+
+const MainFeature = ({ image, text }: MainFeatureProps) => {
   return <div>Big image</div>;
 };
 
-const FeatureGrid = () => {
+type FeatureGridProps = {
+  features: {
+    icon: React.FunctionComponent;
+    title: string;
+    text: string;
+  }[];
+};
+
+const FeatureGrid = ({ features }: FeatureGridProps) => {
   return <div>Feature grid</div>;
 };
 
-const FeatureCards = () => {
+type FeatureCardsProps = {
+  features: {
+    image: string;
+    title: string;
+    text: string;
+  }[];
+};
+
+const FeatureCards = ({ features }: FeatureCardsProps) => {
   return <div>Feature cards</div>;
 };
 
