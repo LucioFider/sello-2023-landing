@@ -68,9 +68,14 @@ export const CommandMenu = () => {
   const commandMenuRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const toggleCommandMenu = (e: MouseEvent) => {
-      const clickedOutside = !commandMenuRef.current?.contains(
-        e.target as Node
-      );
+      if (!commandMenuRef.current) return;
+      const isMenuButton =
+        e.target instanceof Element &&
+        e.target.classList.contains("command-menu-button");
+      const clickedOutside =
+        !isMenuButton && !commandMenuRef.current?.contains(e.target as Node);
+      console.log(clickedOutside, e.target);
+
       setOpened(clickedOutside ? false : true);
     };
     window.addEventListener("click", toggleCommandMenu);
@@ -88,36 +93,50 @@ export const CommandMenu = () => {
 
     return options;
   }, [selectedOption]);
+
+  useEffect(() => {
+    if (!commandMenuRef.current) return;
+    commandMenuRef.current.classList.remove("animate-bounce");
+    commandMenuRef.current.clientWidth;
+    commandMenuRef.current.classList.add("animate-bounce");
+  }, [selectedOption]);
+
   return (
-    <div
-      ref={commandMenuRef}
-      className={classNames(
-        "flex flex-col items-start rounded-lg bg-transparent-white border-transparent-white w-[90vw] max-w-[64rem] absolute left-1/2 -translate-x-1/2 transition-[transform,opacity]",
-        opened && "-translate-y-[2.4rem] opacity-100 opened",
-        !opened && "translate-y-[12.8rem] opacity-60"
-      )}
-    >
-      <span className="ml-4 mt-2 bg-white/[0.05] text-xs px-2 py-1 leading-10 text-white/50">
-        SELLO-101 Walkaway-lightning
-      </span>
-      <input
-        type="text"
-        className="text-lg bg-transparent w-full p-5 outline-none"
-        placeholder="Type a command or search"
-      />
-      <div className="flex flex-col text-sm text-off-white w-full">
-        {currentOptions.map(({ label, icon: Icon, ...menuItems }, index) => (
-          <button
-            onClick={() => {
-              setSelectedOption("subOptions" in menuItems ? index : null);
-            }}
-            className="px-5 flex h-[4.6rem] items-center hover:bg-white/[0.05] w-full"
-            key={label}
-          >
-            <Icon />
-            <span className="ml-3">{label}</span>
-          </button>
-        ))}
+    <div className={classNames(opened && "opened")} ref={commandMenuRef}>
+      <div
+        className={classNames(
+          "flex flex-col items-start rounded-lg bg-transparent-white border-transparent-white w-[90vw] max-w-[64rem] absolute left-[calc(50%+7.5rem)] md:left-1/2 -translate-x-1/2 transition-[transform,opacity] shadow-[rgb(0_0_0_/_35%)_0px_7px_32px]",
+          opened && "translate-y-[12.8rem] md:translate-y-[2.4rem] opacity-100",
+          !opened && "translate-y-[12.8rem] opacity-60"
+        )}
+      >
+        <span className="ml-4 mt-2 bg-white/[0.05] text-xs px-2 py-1 leading-10 text-white/50">
+          SELLO-101 Walkaway-lightning
+        </span>
+        <input
+          type="text"
+          className="text-lg bg-transparent w-full p-5 outline-none"
+          placeholder="Type a command or search"
+        />
+        <div className="flex flex-col text-sm text-off-white w-full">
+          {currentOptions.map(({ label, icon: Icon, ...menuItem }, index) => (
+            <button
+              onClick={(ev) => {
+                const clickedRootItem = "subOptions" in menuItem;
+                setSelectedOption(clickedRootItem ? index : null);
+                if (!clickedRootItem) {
+                  setOpened(false);
+                  ev.stopPropagation();
+                }
+              }}
+              className="command-menu-button first:bg-white/[0.15] px-5 flex h-[4.6rem] items-center gap-3 hover:bg-white/[0.05] w-full"
+              key={label}
+            >
+              <Icon />
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
