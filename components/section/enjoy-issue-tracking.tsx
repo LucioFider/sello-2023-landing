@@ -11,7 +11,9 @@ import {
 export const EnjoyIssueTracking = () => {
   return (
     <Features>
-      <Features.Title>Issue tracking youll enjoy using</Features.Title>
+      <Features.Title>
+        Issue tracking <br /> youll enjoy using
+      </Features.Title>
       <Features.Main
         image="/issues.webp"
         text="Create tasks in seconds, discuss issues in context, and breeze through your work in views tailored to you and your team."
@@ -30,7 +32,7 @@ export const EnjoyIssueTracking = () => {
           },
           {
             icon: WorkflowsIcon,
-            title: "Custom workflows",
+            title: "Custom workflows.",
             text: "Define unique issue states for each team.",
           },
           {
@@ -54,12 +56,14 @@ export const EnjoyIssueTracking = () => {
         features={[
           {
             image: "/card-board.webp",
+            imageClassName: "top-[55%] md:top-[40%] w-[200%]",
             title: "List and board",
             text: "Switch between list and board layout to view work from any angle.",
           },
           {
             image: "/card-views.webp",
-
+            imageClassName:
+              "top-[45%] left-[12px] md:top-[34%] md:left-[24px] w-[110%]",
             title: "Make it yours",
             text: "Quickly apply filters and operators to refine your issue lists and create custom views.",
           },
