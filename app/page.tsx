@@ -29,7 +29,9 @@ export default function Home() {
         <StarsIllustration />
       </div>
       <UnlikeAnyTool />
-      <EnjoyIssueTracking />
+      <Container className="my-[25.2rem]">
+        <EnjoyIssueTracking />
+      </Container>
     </>
   );
 }

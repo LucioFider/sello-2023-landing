@@ -1,16 +1,26 @@
+import React from "react";
+
 type FeaturesProps = {
-  title: string;
   children: React.ReactNode;
 };
 
-export const Features = ({ title, children }: FeaturesProps) => {
+export const Features = ({ children }: FeaturesProps) => {
   return (
-    <section>
-      <h2>{title}</h2>
+    <section className="flex flex-col items-center py-[12.8rem]">
       {children}
     </section>
   );
 };
+
+type FeaturesTitleProps = {
+  children: React.ReactNode;
+};
+
+const FeaturesTitle = ({ children }: FeaturesTitleProps) => (
+  <h2 className="text-gradient mb-11 text-center text-6xl md:text-8xl">
+    {children}
+  </h2>
+);
 // Compound Components
 
 type MainFeatureProps = {
@@ -19,7 +29,16 @@ type MainFeatureProps = {
 };
 
 const MainFeature = ({ image, text }: MainFeatureProps) => {
-  return <div>Big image</div>;
+  return (
+    <div className="w-[78rem] max-w-[90%] text-center">
+      <div className="bg-[linear-gradient(rgba(255,_255,_255,_0.3),_rgba(255,_255,_255,_0.3))]">
+        <img src={image} alt="image" className="h-auto w-full " />
+      </div>
+      <p className="leading-tight text-white mx-auto w-[80%] text-4xl mt-16">
+        {text}
+      </p>
+    </div>
+  );
 };
 
 type FeatureGridProps = {
@@ -47,5 +66,6 @@ const FeatureCards = ({ features }: FeatureCardsProps) => {
 };
 
 Features.Main = MainFeature;
+Features.Title = FeaturesTitle;
 Features.Grid = FeatureGrid;
 Features.Cards = FeatureCards;
