@@ -1,3 +1,5 @@
+"use client";
+
 import { Features } from "../features";
 import {
   AutomatedBacklogIcon,
@@ -10,7 +12,7 @@ import {
 
 export const EnjoyIssueTracking = () => {
   return (
-    <Features color="194,97,254">
+    <Features color="194,97,254" colorDark="53,42,79">
       <Features.Main
         title={
           <>
